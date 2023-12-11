@@ -41,15 +41,6 @@ public class ClienteDao_efb extends Dao_Abstract {
         session.getTransaction().commit();
     }
 
-    public Object listNome(String nome) {
-        session.beginTransaction();
-        Criteria criteria = session.createCriteria(ClienteEfb.class);
-        criteria.add(Restrictions.like("nomeEfb", "%" + nome + "%"));
-        List lista = criteria.list();
-        session.getTransaction().commit();
-        return lista;
-    }
-
     @Override
     public List listAll() {
         session.beginTransaction();
@@ -63,4 +54,73 @@ public class ClienteDao_efb extends Dao_Abstract {
     public Object list(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public Object listNome(String nome) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(ClienteEfb.class);
+        criteria.add(Restrictions.like("nomeEfb", "%" + nome + "%"));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorSexo(String sexo) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(ClienteEfb.class);
+        criteria.add(Restrictions.eq("sexoEfb", sexo));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorEstado(String estado) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(ClienteEfb.class);
+        criteria.add(Restrictions.eq("estadoEfb", estado));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorSexoEEstado(String sexo, String estado) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(ClienteEfb.class);
+        criteria.add(Restrictions.eq("sexoEfb", sexo));
+        criteria.add(Restrictions.eq("estadoEfb", estado));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorNomeESexo(String nome, String sexo) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(ClienteEfb.class);
+        criteria.add(Restrictions.like("nomeEfb", "%" + nome + "%"));
+        criteria.add(Restrictions.eq("sexoEfb", sexo));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorNomeEEstado(String nome, String estado) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(ClienteEfb.class);
+        criteria.add(Restrictions.like("nomeEfb", "%" + nome + "%"));
+        criteria.add(Restrictions.eq("estadoEfb", estado));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorNomeEEstadoESexo(String nome, String estado, String sexo) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(ClienteEfb.class);
+        criteria.add(Restrictions.like("nomeEfb", "%" + nome + "%"));
+        criteria.add(Restrictions.eq("estadoEfb", estado));
+        criteria.add(Restrictions.eq("sexoEfb", sexo));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
 }

@@ -6,9 +6,11 @@
 package consultas;
 
 import padraoNovo.*;
-import controles.PesquisarProduto_efb;
 import dao.ProdutoDao_efb;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tools.Util;
 
 public class JDlgConsultaProduto extends javax.swing.JDialog {
@@ -18,16 +20,17 @@ public class JDlgConsultaProduto extends javax.swing.JDialog {
      */
     JDlgProdutoIA jDlgProduto;
     Util util;
-    PesquisarProduto_efb pesquisarProduto_efb;
+    ConsultaProduto_efb pesquisarProduto_efb;
     ProdutoDao_efb produtoDao;
     List lista;
+    private static final Logger LOGGER = Logger.getLogger("ProdutoDao_efb");
 
     public JDlgConsultaProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Pesquisar Produto");
-        pesquisarProduto_efb = new PesquisarProduto_efb();
+        setTitle("Consultar Produto");
+        pesquisarProduto_efb = new ConsultaProduto_efb();
         produtoDao = new ProdutoDao_efb();
 
         lista = produtoDao.listAll();
@@ -47,11 +50,14 @@ public class JDlgConsultaProduto extends javax.swing.JDialog {
         jBtnIncluir_efb = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jFtmQuantidadeEfb = new javax.swing.JFormattedTextField();
+        jTxtQuantidade_Efb = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
-        jTxtPreco_Efb = new javax.swing.JTextField();
+        jTxtPrecoMaior_Efb = new javax.swing.JTextField();
         jBtnPesquisar_efb = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jBtnCancelar_efb = new javax.swing.JButton();
+        jTxtPrecoMenor_Efb1 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -73,11 +79,6 @@ public class JDlgConsultaProduto extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setText("Quantidade:");
@@ -90,7 +91,17 @@ public class JDlgConsultaProduto extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setText("Preço:");
+        jLabel2.setText("Preço Maior:");
+
+        jBtnCancelar_efb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/sair.png"))); // NOI18N
+        jBtnCancelar_efb.setText("Cancelar");
+        jBtnCancelar_efb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnCancelar_efbActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Preço Menor:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,42 +110,53 @@ public class JDlgConsultaProduto extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTxtPrecoMaior_Efb)
+                            .addComponent(jTxtQuantidade_Efb, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTxtPrecoMenor_Efb1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBtnPesquisar_efb))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jBtnIncluir_efb))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
+                        .addComponent(jBtnIncluir_efb)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTxtPreco_Efb, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jBtnPesquisar_efb))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jFtmQuantidadeEfb, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addComponent(jBtnCancelar_efb)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTxtPreco_Efb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jBtnPesquisar_efb))
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTxtPrecoMaior_Efb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTxtPrecoMenor_Efb1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jFtmQuantidadeEfb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBtnIncluir_efb)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTxtQuantidade_Efb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBtnIncluir_efb))
+                    .addComponent(jBtnCancelar_efb, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jBtnPesquisar_efb)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -145,25 +167,62 @@ public class JDlgConsultaProduto extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_jBtnIncluir_efbActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // TODO add your handling code here:
-        if (evt.getClickCount() == 2) {
-
-            List lista = produtoDao.listAll();
-            pesquisarProduto_efb.setList(lista);
-        }
-    }//GEN-LAST:event_jTable1MouseClicked
-
     private void jBtnPesquisar_efbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisar_efbActionPerformed
         // TODO add your handling code here:
-        if (jTxtPreco_Efb.equals("") && jFtmQuantidadeEfb.equals("")) {
+       
+
+        if (jTxtPrecoMaior_Efb.getText().isEmpty() && jTxtQuantidade_Efb.getText().isEmpty() && jTxtPrecoMenor_Efb1.getText().isEmpty()) {
+            // Se todos os campos de preço, quantidade e preço menor estiverem vazios
+            LOGGER.log(Level.INFO, "Pesquisando todos os produtos.");
             lista = produtoDao.listAll();
             pesquisarProduto_efb.setList(lista);
-        } else if (!jTxtPreco_Efb.equals("") && jFtmQuantidadeEfb.equals("")) {
-            lista = produtoDao.listAll();
+        } else if (!jTxtPrecoMaior_Efb.getText().isEmpty() && jTxtQuantidade_Efb.getText().isEmpty() && jTxtPrecoMenor_Efb1.getText().isEmpty()) {
+            // Se somente o campo de preço maior estiver preenchido
+            LOGGER.log(Level.INFO, "Pesquisando por preço maior que: " + jTxtPrecoMaior_Efb.getText());
+            lista = produtoDao.listPorPrecoMaiorQue(Double.parseDouble(jTxtPrecoMaior_Efb.getText()));
+            pesquisarProduto_efb.setList(lista);
+        } else if (jTxtPrecoMaior_Efb.getText().isEmpty() && !jTxtQuantidade_Efb.getText().isEmpty() && jTxtPrecoMenor_Efb1.getText().isEmpty()) {
+            // Se somente o campo de quantidade estiver preenchido
+            LOGGER.log(Level.INFO, "Pesquisando por quantidade maior que: " + jTxtQuantidade_Efb.getText());
+            lista = produtoDao.listPorQuantidadeMaiorQue(Integer.parseInt(jTxtQuantidade_Efb.getText()));
+            pesquisarProduto_efb.setList(lista);
+        } else if (!jTxtPrecoMaior_Efb.getText().isEmpty() && !jTxtQuantidade_Efb.getText().isEmpty() && jTxtPrecoMenor_Efb1.getText().isEmpty()) {
+            // Se ambos os campos de preço maior e quantidade estiverem preenchidos
+            LOGGER.log(Level.INFO, "Pesquisando por preço e quantidade: " + jTxtPrecoMaior_Efb.getText() + ", " + jTxtQuantidade_Efb.getText());
+            lista = produtoDao.listPorPrecoEQuantidade(Double.parseDouble(jTxtPrecoMaior_Efb.getText()), Integer.parseInt(jTxtQuantidade_Efb.getText()));
+            pesquisarProduto_efb.setList(lista);
+        } else if (jTxtPrecoMaior_Efb.getText().isEmpty() && jTxtQuantidade_Efb.getText().isEmpty() && !jTxtPrecoMenor_Efb1.getText().isEmpty()) {
+            // Se somente o campo de preço menor estiver preenchido
+            LOGGER.log(Level.INFO, "Pesquisando por preço menor que: " + jTxtPrecoMenor_Efb1.getText());
+            lista = produtoDao.listPorPrecoMenorQue(Double.parseDouble(jTxtPrecoMenor_Efb1.getText()));
+            pesquisarProduto_efb.setList(lista);
+        } else if (!jTxtPrecoMaior_Efb.getText().isEmpty() && jTxtQuantidade_Efb.getText().isEmpty() && !jTxtPrecoMenor_Efb1.getText().isEmpty()) {
+            // Se somente os campos de preço maior e preço menor estiverem preenchidos
+            LOGGER.log(Level.INFO, "Pesquisando por preço maior que e preço menor que: " + jTxtPrecoMaior_Efb.getText() + ", " + jTxtPrecoMenor_Efb1.getText());
+            lista = produtoDao.listPorPrecoMaiorQueEMenorQue(Double.parseDouble(jTxtPrecoMaior_Efb.getText()), Double.parseDouble(jTxtPrecoMenor_Efb1.getText()));
+            pesquisarProduto_efb.setList(lista);
+        } else if (jTxtPrecoMaior_Efb.getText().isEmpty() && !jTxtQuantidade_Efb.getText().isEmpty() && !jTxtPrecoMenor_Efb1.getText().isEmpty()) {
+            // Se somente os campos de quantidade e preço menor estiverem preenchidos
+            LOGGER.log(Level.INFO, "Pesquisando por quantidade maior que e preço menor que: " + jTxtQuantidade_Efb.getText() + ", " + jTxtPrecoMenor_Efb1.getText());
+            lista = produtoDao.listPorQuantidadeMaiorQueEPrecoMenorQue(Integer.parseInt(jTxtQuantidade_Efb.getText()), Double.parseDouble(jTxtPrecoMenor_Efb1.getText()));
+            pesquisarProduto_efb.setList(lista);
+        } else if (!jTxtPrecoMaior_Efb.getText().isEmpty() && !jTxtQuantidade_Efb.getText().isEmpty() && !jTxtPrecoMenor_Efb1.getText().isEmpty()) {
+            // Se todos os campos de preço maior, quantidade e preço menor estiverem preenchidos
+            LOGGER.log(Level.INFO, "Pesquisando por preço maior que, quantidade maior que e preço menor que: " + jTxtPrecoMaior_Efb.getText() + ", " + jTxtQuantidade_Efb.getText() + ", " + jTxtPrecoMenor_Efb1.getText());
+            lista = produtoDao.listPorPrecoMaiorQueEQuantidadeMaiorQueEPrecoMenorQue(Double.parseDouble(jTxtPrecoMaior_Efb.getText()), Integer.parseInt(jTxtQuantidade_Efb.getText()), Double.parseDouble(jTxtPrecoMenor_Efb1.getText()));
             pesquisarProduto_efb.setList(lista);
         }
+
     }//GEN-LAST:event_jBtnPesquisar_efbActionPerformed
+
+    private void jBtnCancelar_efbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelar_efbActionPerformed
+        // TODO add your handling code here:
+        if (util.pergunta("Deseja Cancelar ?")) {
+            setVisible(false);
+        } else {
+            util.mensagem("Selecione uma linha");
+        }
+    }//GEN-LAST:event_jBtnCancelar_efbActionPerformed
 
     /**
      * @param args the command line arguments
@@ -207,13 +266,16 @@ public class JDlgConsultaProduto extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnCancelar_efb;
     private javax.swing.JButton jBtnIncluir_efb;
     private javax.swing.JButton jBtnPesquisar_efb;
-    private javax.swing.JFormattedTextField jFtmQuantidadeEfb;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTxtPreco_Efb;
+    private javax.swing.JTextField jTxtPrecoMaior_Efb;
+    private javax.swing.JTextField jTxtPrecoMenor_Efb1;
+    private javax.swing.JFormattedTextField jTxtQuantidade_Efb;
     // End of variables declaration//GEN-END:variables
 }

@@ -66,13 +66,13 @@ public class JDlgProdutoIA extends javax.swing.JDialog {
 
 // Método para obter os dados dos componentes da tela e atualizar o bean
     public ProdutoEfb viewBean() {
-        ProdutoEfb produto = new ProdutoEfb();
-        produto.setIdprodutoEfb(util.paraInteiro(jTxtId_efb.getText()));
-        produto.setNomeEfb(jTxtNome.getText());
-        produto.setCategoriaEfb((String) jCboCategoria_efb.getSelectedItem());
-        produto.setQuantidadeEstoqueEfb(Integer.parseInt(jTxtQunatidade_efb.getText()));
-        produto.setValorUnitarioEfb(Double.parseDouble(jTxtValorUni_efb.getText()));
-        return produto;
+  
+        produtoEfb.setIdprodutoEfb(util.paraInteiro(jTxtId_efb.getText()));
+        produtoEfb.setNomeEfb(jTxtNome.getText());
+        produtoEfb.setCategoriaEfb((String) jCboCategoria_efb.getSelectedItem());
+        produtoEfb.setQuantidadeEstoqueEfb(Integer.parseInt(jTxtQunatidade_efb.getText()));
+        produtoEfb.setValorUnitarioEfb(Double.parseDouble(jTxtValorUni_efb.getText()));
+        return produtoEfb;
     }
 
     /**
@@ -208,13 +208,16 @@ public class JDlgProdutoIA extends javax.swing.JDialog {
 
     private void jBtnConfirmar_efbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmar_efbActionPerformed
         // TODO add your handling code here:
-        produtoDao_efb = new ProdutoDao_efb();
+
         if (getTitle().equals("Incluindo")) {
+            produtoDao_efb = new ProdutoDao_efb();
             produtoEfb = viewBean();
             produtoDao_efb.insert(produtoEfb);
             util.mensagem("Incluido");
             setVisible(false);
         } else if (getTitle().equals("Alterando")) {
+            produtoDao_efb = new ProdutoDao_efb();
+            produtoEfb = viewBean();
             produtoDao_efb.update(produtoEfb);
             util.mensagem("Alterando");
             setVisible(false);

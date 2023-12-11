@@ -11,7 +11,7 @@ import javax.swing.table.AbstractTableModel;
 
 public class ConsultaProduto_efb extends AbstractTableModel {
 
-    private List Produtolista;
+    public List Produtolista;
 
     public void setList(List lista) {
         this.Produtolista = lista;
@@ -43,7 +43,7 @@ public class ConsultaProduto_efb extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -58,6 +58,9 @@ public class ConsultaProduto_efb extends AbstractTableModel {
         if (columnIndex == 2) {
             return Produto.getQuantidadeEstoqueEfb();
         }
+        if (columnIndex == 3) {
+            return Produto.getValorUnitarioEfb();
+        }
 
         return "";
     }
@@ -70,6 +73,8 @@ public class ConsultaProduto_efb extends AbstractTableModel {
                 return "Nome";
             case 2:
                 return "Quantidade em estoque";
+            case 3:
+                return "Valor Unitário";
         }
         return "";
     }

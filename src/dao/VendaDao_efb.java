@@ -8,6 +8,7 @@ package dao;
 import bean.VendaEfb;
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *

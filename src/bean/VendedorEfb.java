@@ -105,4 +105,19 @@ public class VendedorEfb implements java.io.Serializable {
         this.ativoEfb = ativoEfb;
     }
 
+    public String toString() {
+        return getNomeEfb();
+    }
+        @Override
+    public boolean equals(Object object) {
+        if (object instanceof VendedorEfb) {
+
+            VendedorEfb vendedorEfb = (VendedorEfb) object;
+            if (this.getIdvendedorEfb()== vendedorEfb.getIdvendedorEfb()) {
+                return true;
+            }
+        }
+        return false;
+
+    }
 }

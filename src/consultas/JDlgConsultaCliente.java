@@ -5,10 +5,10 @@
  */
 package consultas;
 
-import telas.*;
-import controles.PesquisarCliente_efb;
 import dao.ClienteDao_efb;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import tools.Util;
 import javax.swing.JOptionPane;
 
@@ -19,19 +19,20 @@ public class JDlgConsultaCliente extends javax.swing.JDialog {
      */
     // JDlgCliente jDlgCliente;
     Util util;
-    PesquisarCliente_efb pesquisarCliente;
+    ConsultaCliente_efb pesquisarCliente;
     ClienteDao_efb clienteDao;
     List lista;
-    
+    private static final Logger LOGGER = Logger.getLogger(ClienteDao_efb.class.getName());
+
     public JDlgConsultaCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Pesquisar Cliente");
-        pesquisarCliente = new PesquisarCliente_efb();
+        setTitle("Consultar Cliente");
+        pesquisarCliente = new ConsultaCliente_efb();
         clienteDao = new ClienteDao_efb();
-        
-        lista = clienteDao.listAll();
+
+        lista = new ArrayList();
         pesquisarCliente.setList(lista);
         jTable1.setModel(pesquisarCliente);
     }
@@ -40,6 +41,10 @@ public class JDlgConsultaCliente extends javax.swing.JDialog {
         this.jDlgCliente = jDlgCliente;
 
     }*/
+    public void Limpar() {
+        util.limparCampos(jTxtEstado_Efb1, jTxtNome_Efb, jCmbSexo_efb);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,8 +61,10 @@ public class JDlgConsultaCliente extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jTxtNome_Efb = new javax.swing.JTextField();
         jBtnPesquisar_efb = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jFtmDataEfb = new javax.swing.JFormattedTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jTxtEstado_Efb1 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jCmbSexo_efb = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -99,57 +106,66 @@ public class JDlgConsultaCliente extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setText("Data:");
+        jLabel3.setText("Sexo:");
+
+        jLabel4.setText("Estado:");
+
+        jCmbSexo_efb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino", "" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jBtnOk_efb)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jBtnCancelar_efb)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 4, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBtnPesquisar_efb)
+                        .addGap(12, 12, 12))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTxtNome_Efb, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBtnPesquisar_efb))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jFtmDataEfb, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTxtNome_Efb, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCmbSexo_efb, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTxtEstado_Efb1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTxtNome_Efb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jBtnPesquisar_efb))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFtmDataEfb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTxtNome_Efb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCmbSexo_efb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBtnCancelar_efb)
-                    .addComponent(jBtnOk_efb))
-                .addContainerGap())
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTxtEstado_Efb1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jBtnCancelar_efb)
+                        .addComponent(jBtnPesquisar_efb))
+                    .addComponent(jBtnOk_efb, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
 
         pack();
@@ -174,12 +190,30 @@ public class JDlgConsultaCliente extends javax.swing.JDialog {
 
     private void jBtnPesquisar_efbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisar_efbActionPerformed
         // TODO add your handling code here:
-        if (jTxtNome_Efb.equals("") && jFtmDataEfb.equals("")) {
-            lista = clienteDao.listAll();
-            pesquisarCliente.setList(lista);
-        } else if (!jTxtNome_Efb.equals("") && jFtmDataEfb.equals("")) {
+        clienteDao = new ClienteDao_efb();
+        
+        if (!jTxtNome_Efb.getText().isEmpty() && jTxtEstado_Efb1.getText().isEmpty() && jCmbSexo_efb.getSelectedItem().equals("")) {
+            // Se somente o campo de nome estiver preenchido e o campo de estado estiver vazio, e nenhum item estiver selecionado no JComboBox
+            LOGGER.info("Consultando por nome.");
             lista = (List) clienteDao.listNome(jTxtNome_Efb.getText());
             pesquisarCliente.setList(lista);
+        } else if (jTxtNome_Efb.getText().isEmpty() && jTxtEstado_Efb1.getText().isEmpty() && jCmbSexo_efb.getSelectedItem().equals("")) {
+            LOGGER.info("Consultando todos os clientes.");
+            lista = clienteDao.listAll();
+            pesquisarCliente.setList(lista);
+        } else if (jTxtNome_Efb.getText().isEmpty() && !jTxtEstado_Efb1.getText().isEmpty() && jCmbSexo_efb.getSelectedItem().equals("")) {
+            // Se somente o campo de estado estiver preenchido e o campo de nome estiver vazio, e nenhum item estiver selecionado no JComboBox
+            LOGGER.info("Consultando por estado.");
+            lista = clienteDao.listPorEstado(jTxtEstado_Efb1.getText());
+            pesquisarCliente.setList(lista);
+        } else if (!jTxtNome_Efb.getText().isEmpty() && !jTxtEstado_Efb1.getText().isEmpty() && !jCmbSexo_efb.getSelectedItem().equals("")) {
+            // Se ambos os campos de nome e estado estiverem preenchidos e um item estiver selecionado no JComboBox
+            LOGGER.info("Consultando por nome, estado e sexo.");
+            lista = clienteDao.listPorNomeEEstadoESexo(jTxtNome_Efb.getText(), jTxtEstado_Efb1.getText(), (String) jCmbSexo_efb.getSelectedItem());
+            pesquisarCliente.setList(lista);
+        } else {
+            // Se nenhuma das condições acima for atendida
+            LOGGER.warning("Nenhuma condição de consulta correspondente encontrada.");
         }
     }//GEN-LAST:event_jBtnPesquisar_efbActionPerformed
 
@@ -228,11 +262,13 @@ public class JDlgConsultaCliente extends javax.swing.JDialog {
     private javax.swing.JButton jBtnCancelar_efb;
     private javax.swing.JButton jBtnOk_efb;
     private javax.swing.JButton jBtnPesquisar_efb;
-    private javax.swing.JFormattedTextField jFtmDataEfb;
+    private javax.swing.JComboBox<String> jCmbSexo_efb;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTxtEstado_Efb1;
     private javax.swing.JTextField jTxtNome_Efb;
     // End of variables declaration//GEN-END:variables
 }

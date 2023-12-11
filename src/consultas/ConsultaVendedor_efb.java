@@ -6,20 +6,23 @@
 package consultas;
 
 import controles.*;
-import bean.VendaEfb;
+import bean.VendedorEfb;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class ConsultaVenda_efb extends AbstractTableModel {
+
+public class ConsultaVendedor_efb extends AbstractTableModel{
+
 
     private List lista;
 
     public void setList(List lista) {
         this.lista = lista;
+        this.fireTableDataChanged();
     }
 
-    public VendaEfb getVenda(int row) {
-        return (VendaEfb) lista.get(row);
+    public VendedorEfb getVendedorEfb(int row) {
+        return (VendedorEfb) lista.get(row);
     }
 
     @Override
@@ -33,24 +36,26 @@ public class ConsultaVenda_efb extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        VendaEfb Venda = (VendaEfb) lista.get(rowIndex);
+        VendedorEfb vendedorEfb = (VendedorEfb) lista.get(rowIndex);
         if (columnIndex == 0) {
-            return Venda.getIdvendaEfb();
+            return vendedorEfb.getIdvendedorEfb();
         }
         if (columnIndex == 1) {
-            return Venda.getVendedorEfb().getNomeEfb();
+            return vendedorEfb.getNomeEfb();
         }
         if (columnIndex == 2) {
-            return Venda.getClienteEfb().getNomeEfb();
+            return vendedorEfb.getSobrenomeEfb();
         }
-
         if (columnIndex == 3) {
-            return Venda.getTotalEfb();
+            return vendedorEfb.getEnderecoEfb();
+        }
+        if (columnIndex == 4) {
+            return vendedorEfb.getAtivoEfb();
         }
 
         return "";
@@ -61,13 +66,18 @@ public class ConsultaVenda_efb extends AbstractTableModel {
             case 0:
                 return "ID";
             case 1:
-                return "Funcionario";
+                return "Nome";
             case 2:
-                return "Cliente";
+                return "Sobrenome";
             case 3:
-                return "Total";
+                return "Endereço";
+            case 4:
+                return "Ativo";
+           
         }
         return "";
     }
 
+ 
+    
 }

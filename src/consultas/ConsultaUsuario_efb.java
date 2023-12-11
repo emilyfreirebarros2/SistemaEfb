@@ -18,6 +18,7 @@ public class ConsultaUsuario_efb extends AbstractTableModel{
 
     public void setList(List lista) {
         this.lista = lista;
+        this.fireTableDataChanged();
     }
 
     public UsuarioEfb getUsuaruio(int row) {
@@ -35,7 +36,7 @@ public class ConsultaUsuario_efb extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -48,6 +49,9 @@ public class ConsultaUsuario_efb extends AbstractTableModel{
             return usuarios.getNomeEfb();
         }
         if (columnIndex == 2) {
+            return usuarios.getNivelEfb();
+        }
+        if (columnIndex == 3) {
             return usuarios.getAtivoEfb();
         }
 
@@ -62,6 +66,8 @@ public class ConsultaUsuario_efb extends AbstractTableModel{
                 return "Nome";
             case 2:
                 return "Ativo";
+            case 3:
+                return "Nivel";
         }
         return "";
     }

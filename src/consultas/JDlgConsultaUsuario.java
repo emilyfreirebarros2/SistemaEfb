@@ -1,25 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package consultas;
 
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import telas.*;
-import controles.PesquisarUsuario_efb;
 import dao.UsuarioDao_efb;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import tools.Util;
 
 public class JDlgConsultaUsuario extends javax.swing.JDialog {
-    
+
     /**
      * Creates new form JDlgPesquisaCliente
      */
-    JDlgUsuarios jDlgUsuarios;
     Util util;
-    PesquisarUsuario_efb pesquisarUsuario;
+    ConsultaUsuario_efb pesquisarUsuario;
     UsuarioDao_efb usuarioDao;
     List lista;
 
@@ -27,21 +24,20 @@ public class JDlgConsultaUsuario extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Pesquisar Cliente");
+        setTitle("Consultar Usuario");
 
-        pesquisarUsuario = new PesquisarUsuario_efb();
+        pesquisarUsuario = new ConsultaUsuario_efb();
         usuarioDao = new UsuarioDao_efb();
-
+        lista=new ArrayList();
         lista = usuarioDao.listAll();
         pesquisarUsuario.setList(lista);
         jTable1.setModel(pesquisarUsuario);
     }
 
-    public void setTelaAnterior(JDlgUsuarios jDlgUsuarios) {
+   /* public void setTelaAnterior(JDlgUsuarios jDlgUsuarios) {
         this.jDlgUsuarios = jDlgUsuarios;
-
     }
-
+*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,12 +51,12 @@ public class JDlgConsultaUsuario extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
         jBtnOk_efb = new javax.swing.JButton();
         jBtnCancelar_efb1 = new javax.swing.JButton();
-        jFtmQuantidadeEfb = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
-        jTxtPreco_Efb = new javax.swing.JTextField();
+        jTxtNome_Efb = new javax.swing.JTextField();
         jBtnPesquisar_efb = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jCbxAtivo_Efb = new javax.swing.JCheckBox();
+        jChkAtivo_Efb = new javax.swing.JCheckBox();
+        jCmbNivel_efb = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -92,7 +88,7 @@ public class JDlgConsultaUsuario extends javax.swing.JDialog {
             }
         });
 
-        jLabel1.setText("senha:");
+        jLabel1.setText("Nivel:");
 
         jBtnPesquisar_efb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pesquisa-global.png"))); // NOI18N
         jBtnPesquisar_efb.setText("Pesquisar");
@@ -104,7 +100,9 @@ public class JDlgConsultaUsuario extends javax.swing.JDialog {
 
         jLabel2.setText("Nome:");
 
-        jCbxAtivo_Efb.setText("Ativo");
+        jChkAtivo_Efb.setText("Ativo");
+
+        jCmbNivel_efb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Visitante", "Vendedor", "Comun", "" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -122,36 +120,43 @@ public class JDlgConsultaUsuario extends javax.swing.JDialog {
                         .addComponent(jBtnCancelar_efb1)
                         .addGap(20, 20, 20))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTxtPreco_Efb, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCbxAtivo_Efb)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBtnPesquisar_efb))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jFtmQuantidadeEfb, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel1)
+                        .addGap(19, 19, 19))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTxtNome_Efb)
+                    .addComponent(jCmbNivel_efb, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jChkAtivo_Efb)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBtnPesquisar_efb)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTxtPreco_Efb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jCbxAtivo_Efb))
-                    .addComponent(jBtnPesquisar_efb))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jFtmQuantidadeEfb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTxtNome_Efb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jChkAtivo_Efb))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCmbNivel_efb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(11, 11, 11))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBtnPesquisar_efb)
+                        .addGap(18, 18, 18)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -183,13 +188,54 @@ public class JDlgConsultaUsuario extends javax.swing.JDialog {
 
     private void jBtnPesquisar_efbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisar_efbActionPerformed
         // TODO add your handling code here:
-        if (jTxtPreco_Efb.equals("") && jFtmQuantidadeEfb.equals("")) {
+        usuarioDao = new UsuarioDao_efb();
+        String ativoValue = jChkAtivo_Efb.isSelected() ? "Sim" : "Não";
+
+        if (jTxtNome_Efb.getText().equals("") && !jCmbNivel_efb.getSelectedItem().equals("") && !jChkAtivo_Efb.isSelected()) {
+            // Se somente o campo de Nível estiver selecionado
+            LOGGER.log(Level.INFO, "Pesquisando por Nível: " + jCmbNivel_efb.getSelectedItem());
+            lista = usuarioDao.listPorNivel((String) jCmbNivel_efb.getSelectedItem());
+            pesquisarUsuario.setList(lista);
+        } else if (!jTxtNome_Efb.getText().equals("") && jCmbNivel_efb.getSelectedItem().equals("") && !jChkAtivo_Efb.isSelected()) {
+            // Se somente o campo de Nome estiver preenchido
+            LOGGER.log(Level.INFO, "Pesquisando por Nome: " + jTxtNome_Efb.getText());
+            lista = usuarioDao.listPorNome(jTxtNome_Efb.getText());
+            pesquisarUsuario.setList(lista);
+        } else if (jTxtNome_Efb.getText().equals("") && jCmbNivel_efb.getSelectedItem().equals("") && !jChkAtivo_Efb.isSelected()) {
+            // Se tudo estiver vazio
+            LOGGER.log(Level.INFO, "Pesquisando tudo em usuario: ");
             lista = usuarioDao.listAll();
             pesquisarUsuario.setList(lista);
-        } else if (!jTxtPreco_Efb.equals("") && jFtmQuantidadeEfb.equals("")) {
-            lista = usuarioDao.listAll();
+        } else if (!jTxtNome_Efb.getText().equals("") && !jCmbNivel_efb.getSelectedItem().equals("") && !jChkAtivo_Efb.isSelected()) {
+            // Se os campos de Nome e Nível estiverem preenchidos
+            LOGGER.log(Level.INFO, "Pesquisando por Nome: " + jTxtNome_Efb.getText() + ", Nível: " + jCmbNivel_efb.getSelectedItem());
+            lista = usuarioDao.listPorNomeENivel(jTxtNome_Efb.getText(), (String) jCmbNivel_efb.getSelectedItem());
             pesquisarUsuario.setList(lista);
+        } else if (jTxtNome_Efb.getText().equals("") && jCmbNivel_efb.getSelectedItem().equals("") && jChkAtivo_Efb.isSelected()) {
+            // Se somente o campo de Ativo estiver selecionado
+            LOGGER.log(Level.INFO, "Pesquisando por Ativo: " + ativoValue);
+            lista = usuarioDao.listPorAtivo(ativoValue);
+            pesquisarUsuario.setList(lista);
+        } else if (jTxtNome_Efb.getText().equals("") && !jCmbNivel_efb.getSelectedItem().equals("") && jChkAtivo_Efb.isSelected()) {
+            // Se os campos de Nível e Ativo estiverem selecionados
+            LOGGER.log(Level.INFO, "Pesquisando por Nível: " + jCmbNivel_efb.getSelectedItem() + ", Ativo: " + ativoValue);
+            lista = usuarioDao.listPorAtivoENivel(ativoValue, (String) jCmbNivel_efb.getSelectedItem());
+            pesquisarUsuario.setList(lista);
+        } else if (!jTxtNome_Efb.getText().equals("") && jCmbNivel_efb.getSelectedItem().equals("") && jChkAtivo_Efb.isSelected()) {
+            // Se os campos de Nome e Ativo estiverem preenchidos
+            LOGGER.log(Level.INFO, "Pesquisando por Nome: " + jTxtNome_Efb.getText() + ", Ativo: " + ativoValue);
+            lista = usuarioDao.listPorNomeEAtivo(jTxtNome_Efb.getText(), ativoValue);
+            pesquisarUsuario.setList(lista);
+        } else if (!jTxtNome_Efb.getText().equals("") && !jCmbNivel_efb.getSelectedItem().equals("") && jChkAtivo_Efb.isSelected()) {
+            // Se todos os campos de Nome, Nível e Ativo estiverem preenchidos
+            LOGGER.log(Level.INFO, "Pesquisando por Nome: " + jTxtNome_Efb.getText() + ", Nível: " + jCmbNivel_efb.getSelectedItem() + ", Ativo: " + ativoValue);
+            lista = usuarioDao.listPorNomeAtivoENivel(jTxtNome_Efb.getText(), ativoValue, (String) jCmbNivel_efb.getSelectedItem());
+            pesquisarUsuario.setList(lista);
+        } else {
+            // Caso nenhum critério seja selecionado
+            LOGGER.log(Level.WARNING, "Nenhum critério de pesquisa correspondente encontrado.");
         }
+
     }//GEN-LAST:event_jBtnPesquisar_efbActionPerformed
 
     /**
@@ -237,12 +283,12 @@ public class JDlgConsultaUsuario extends javax.swing.JDialog {
     private javax.swing.JButton jBtnCancelar_efb1;
     private javax.swing.JButton jBtnOk_efb;
     private javax.swing.JButton jBtnPesquisar_efb;
-    private javax.swing.JCheckBox jCbxAtivo_Efb;
-    private javax.swing.JFormattedTextField jFtmQuantidadeEfb;
+    private javax.swing.JCheckBox jChkAtivo_Efb;
+    private javax.swing.JComboBox<String> jCmbNivel_efb;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTxtPreco_Efb;
+    private javax.swing.JTextField jTxtNome_Efb;
     // End of variables declaration//GEN-END:variables
 }

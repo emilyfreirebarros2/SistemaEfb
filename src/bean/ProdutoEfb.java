@@ -82,5 +82,7 @@ public class ProdutoEfb implements java.io.Serializable {
     public void setCategoriaEfb(String categoriaEfb) {
         this.categoriaEfb = categoriaEfb;
     }
-
+ public String toString() {
+        return getNomeEfb();
+    }
 }

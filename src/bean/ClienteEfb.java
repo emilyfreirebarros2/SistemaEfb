@@ -197,4 +197,20 @@ public class ClienteEfb implements java.io.Serializable {
         this.complementoEfb = complementoEfb;
     }
 
+    public String toString() {
+        return getNomeEfb();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object instanceof ClienteEfb) {
+
+            ClienteEfb cliente = (ClienteEfb) object;
+            if (this.getIdclienteEfb() == cliente.getIdclienteEfb()) {
+                return true;
+            }
+        }
+        return false;
+
+    }
 }

@@ -251,6 +251,7 @@ public class JDlgVendedorIA extends javax.swing.JDialog {
             util.mensagem("Incluindo");
             setVisible(false);
         } else if (getTitle().equals("Alterando")) {
+            vendedorEfb = viewBean();
             vendedorDao_efb.update(vendedorEfb);
             util.mensagem("Alterando");
             jTxtCodigoVendedor_efb.setEnabled(false);

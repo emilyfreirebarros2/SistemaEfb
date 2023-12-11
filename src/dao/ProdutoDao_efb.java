@@ -8,6 +8,7 @@ package dao;
 import bean.ProdutoEfb;
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -53,4 +54,82 @@ public class ProdutoDao_efb extends Dao_Abstract {
         session.getTransaction().commit();
         return lista;
     }
+
+    public List listPorPrecoMaiorQue(double preco) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(ProdutoEfb.class);
+        criteria.add(Restrictions.gt("valorUnitarioEfb", preco));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorPrecoMenorQue(double preco) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(ProdutoEfb.class);
+        criteria.add(Restrictions.lt("valorUnitarioEfb", preco));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorQuantidadeMaiorQue(int quantidade) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(ProdutoEfb.class);
+        criteria.add(Restrictions.gt("quantidadeEstoqueEfb", quantidade));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorQuantidadeMenorQue(int quantidade) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(ProdutoEfb.class);
+        criteria.add(Restrictions.lt("quantidadeEstoqueEfb", quantidade));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorPrecoEQuantidade(double preco, int quantidade) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(ProdutoEfb.class);
+        criteria.add(Restrictions.gt("valorUnitarioEfb", preco));
+        criteria.add(Restrictions.gt("quantidadeEstoqueEfb", quantidade));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorPrecoMaiorQueEMenorQue(double precoMaior, double precoMenor) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(ProdutoEfb.class);
+        criteria.add(Restrictions.gt("valorUnitarioEfb", precoMaior));
+        criteria.add(Restrictions.lt("valorUnitarioEfb", precoMenor));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorQuantidadeMaiorQueEPrecoMenorQue(int quantidade, double precoMenor) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(ProdutoEfb.class);
+        criteria.add(Restrictions.gt("quantidadeEstoqueEfb", quantidade));
+        criteria.add(Restrictions.lt("valorUnitarioEfb", precoMenor));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorPrecoMaiorQueEQuantidadeMaiorQueEPrecoMenorQue(double precoMaior, int quantidade, double precoMenor) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(ProdutoEfb.class);
+        criteria.add(Restrictions.gt("valorUnitarioEfb", precoMaior));
+        criteria.add(Restrictions.gt("quantidadeEstoqueEfb", quantidade));
+        criteria.add(Restrictions.lt("valorUnitarioEfb", precoMenor));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
 }

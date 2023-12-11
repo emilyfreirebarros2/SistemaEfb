@@ -69,4 +69,72 @@ public class UsuarioDao_efb extends Dao_Abstract {
             return null; // retorna vazio pois não achou nada
         }
     }
+    
+    public List listPorNome(String nome) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(UsuarioEfb.class);
+        criteria.add(Restrictions.like("nomeEfb", "%" + nome + "%"));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorAtivo(String ativo) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(UsuarioEfb.class);
+        criteria.add(Restrictions.eq("ativoEfb", ativo));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorNivel(String nivel) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(UsuarioEfb.class);
+        criteria.add(Restrictions.eq("nivelEfb", nivel));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+    
+        public List listPorNomeEAtivo(String nome, String ativo) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(UsuarioEfb.class);
+        criteria.add(Restrictions.like("nomeEfb", "%" + nome + "%"));
+        criteria.add(Restrictions.eq("ativoEfb", ativo));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorNomeENivel(String nome, String nivel) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(UsuarioEfb.class);
+        criteria.add(Restrictions.like("nomeEfb", "%" + nome + "%"));
+        criteria.add(Restrictions.eq("nivelEfb", nivel));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorAtivoENivel(String ativo, String nivel) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(UsuarioEfb.class);
+        criteria.add(Restrictions.eq("ativoEfb", ativo));
+        criteria.add(Restrictions.eq("nivelEfb", nivel));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+
+    public List listPorNomeAtivoENivel(String nome, String ativo, String nivel) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(UsuarioEfb.class);
+        criteria.add(Restrictions.like("nomeEfb", "%" + nome + "%"));
+        criteria.add(Restrictions.eq("ativoEfb", ativo));
+        criteria.add(Restrictions.eq("nivelEfb", nivel));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }   
 }

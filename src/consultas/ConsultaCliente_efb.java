@@ -36,7 +36,7 @@ public class ConsultaCliente_efb extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 6;
     }
 
     @Override
@@ -51,6 +51,15 @@ public class ConsultaCliente_efb extends AbstractTableModel{
         if (columnIndex == 2) {
             return cliente.getCidadeEfb();
         }
+        if (columnIndex == 3) {
+            return cliente.getEstadoEfb();
+        }
+        if (columnIndex == 4) {
+            return cliente.getSexoEfb();
+        }
+        if (columnIndex == 5) {
+            return cliente.getTelefoneEfb();
+        }
 
         return "";
     }
@@ -63,6 +72,12 @@ public class ConsultaCliente_efb extends AbstractTableModel{
                 return "Nome";
             case 2:
                 return "Cidade";
+            case 3:
+                return "Estado";
+            case 4:
+                return "Sexo";
+            case 5:
+                return "Telefone";
         }
         return "";
     }

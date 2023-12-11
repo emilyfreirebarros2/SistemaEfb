@@ -31,6 +31,7 @@ public class JDlgVendas extends javax.swing.JDialog {
         setTitle("Vendas");
         setLocationRelativeTo(null);
         habilitar(false);
+       
         venda = new VendaEfb();
         vendaDAO = new VendaDao_efb();
         incluindo = false;
@@ -59,6 +60,7 @@ public class JDlgVendas extends javax.swing.JDialog {
         vendasProdControle = new VendasProdControle();
         vendasProdControle.setList(new ArrayList());
         jTable1.setModel(vendasProdControle);
+        limpar();
     }
 
     public void habilitar(boolean valor) {
@@ -441,6 +443,7 @@ public class JDlgVendas extends javax.swing.JDialog {
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed
         // TODO add your handling code here:
+      
         venda = new VendaEfb();
         JDlgPesquisaVenda jDlgPesquisaCliente = new JDlgPesquisaVenda(null, true);
         jDlgPesquisaCliente.setTelaAnterior(this);

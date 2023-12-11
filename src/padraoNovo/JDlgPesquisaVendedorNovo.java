@@ -26,7 +26,7 @@ public class JDlgPesquisaVendedorNovo extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
-        setTitle("Pesquisar.f");
+        setTitle("Pesquisar Vendedor");
         pesquisarVendedor = new PesquisarVendedor_efb();
         vendedorDao_efb = new VendedorDao_efb();
 
@@ -50,6 +50,7 @@ public class JDlgPesquisaVendedorNovo extends javax.swing.JDialog {
         jBtnAlterar_efb = new javax.swing.JButton();
         jBtnIncluir_efb = new javax.swing.JButton();
         jBtnExcluir_efb = new javax.swing.JButton();
+        jBtnAtualizar_efb = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -64,11 +65,6 @@ public class JDlgPesquisaVendedorNovo extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTable1);
 
         jBtnAlterar_efb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/alterar.png"))); // NOI18N
@@ -95,18 +91,27 @@ public class JDlgPesquisaVendedorNovo extends javax.swing.JDialog {
             }
         });
 
+        jBtnAtualizar_efb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/atualizar_lista.png"))); // NOI18N
+        jBtnAtualizar_efb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnAtualizar_efbActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(jBtnIncluir_efb)
+                .addContainerGap()
+                .addComponent(jBtnAtualizar_efb)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBtnIncluir_efb)
+                .addGap(18, 18, 18)
                 .addComponent(jBtnAlterar_efb)
-                .addGap(101, 101, 101)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBtnExcluir_efb)
-                .addGap(136, 136, 136))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(2, 2, 2)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 682, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -116,12 +121,14 @@ public class JDlgPesquisaVendedorNovo extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBtnAlterar_efb)
-                    .addComponent(jBtnIncluir_efb)
-                    .addComponent(jBtnExcluir_efb))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jBtnAlterar_efb)
+                        .addComponent(jBtnIncluir_efb)
+                        .addComponent(jBtnExcluir_efb))
+                    .addComponent(jBtnAtualizar_efb, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
 
@@ -163,13 +170,12 @@ public class JDlgPesquisaVendedorNovo extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jBtnExcluir_efbActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void jBtnAtualizar_efbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAtualizar_efbActionPerformed
         // TODO add your handling code here:
-        if (evt.getClickCount() == 2) {
-            List lista = vendedorDao_efb.listAll();
-            pesquisarVendedor.setList(lista);
-        }
-    }//GEN-LAST:event_jTable1MouseClicked
+        vendedorDao_efb = new VendedorDao_efb();
+        List lista = vendedorDao_efb.listAll();
+        pesquisarVendedor.setList(lista);
+    }//GEN-LAST:event_jBtnAtualizar_efbActionPerformed
 
     /**
      * @param args the command line arguments
@@ -342,6 +348,7 @@ public class JDlgPesquisaVendedorNovo extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnAlterar_efb;
+    private javax.swing.JButton jBtnAtualizar_efb;
     private javax.swing.JButton jBtnExcluir_efb;
     private javax.swing.JButton jBtnIncluir_efb;
     private javax.swing.JScrollPane jScrollPane1;

@@ -47,6 +47,7 @@ public class JDlgPesquisProdutoNovo extends javax.swing.JDialog {
         jTable1 = new javax.swing.JTable();
         jBtnExcluir_efb = new javax.swing.JButton();
         jBtnAlterar_efb = new javax.swing.JButton();
+        jBtnAtualizar_efb = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -69,11 +70,6 @@ public class JDlgPesquisProdutoNovo extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTable1);
 
         jBtnExcluir_efb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete.png"))); // NOI18N
@@ -92,22 +88,32 @@ public class JDlgPesquisProdutoNovo extends javax.swing.JDialog {
             }
         });
 
+        jBtnAtualizar_efb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/atualizar_lista.png"))); // NOI18N
+        jBtnAtualizar_efb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnAtualizar_efbActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(234, Short.MAX_VALUE)
-                .addComponent(jBtnIncluir_efb)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jBtnAlterar_efb)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBtnExcluir_efb)
-                .addGap(201, 201, 201))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jBtnAtualizar_efb)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
+                        .addComponent(jBtnIncluir_efb)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBtnAlterar_efb)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBtnExcluir_efb)
+                        .addGap(201, 201, 201))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,10 +121,12 @@ public class JDlgPesquisProdutoNovo extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBtnExcluir_efb)
-                    .addComponent(jBtnAlterar_efb)
-                    .addComponent(jBtnIncluir_efb))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jBtnExcluir_efb)
+                        .addComponent(jBtnAlterar_efb)
+                        .addComponent(jBtnIncluir_efb))
+                    .addComponent(jBtnAtualizar_efb))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -160,14 +168,13 @@ public class JDlgPesquisProdutoNovo extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jBtnAlterar_efbActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void jBtnAtualizar_efbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAtualizar_efbActionPerformed
         // TODO add your handling code here:
-        if (evt.getClickCount() == 2) {
+        produtoDao = new ProdutoDao_efb();
+        List lista = produtoDao.listAll();
+        pesquisarProduto_efb.setList(lista);
 
-            List lista = produtoDao.listAll();
-            pesquisarProduto_efb.setList(lista);
-        }
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_jBtnAtualizar_efbActionPerformed
 
     /**
      * @param args the command line arguments
@@ -340,6 +347,7 @@ public class JDlgPesquisProdutoNovo extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnAlterar_efb;
+    private javax.swing.JButton jBtnAtualizar_efb;
     private javax.swing.JButton jBtnExcluir_efb;
     private javax.swing.JButton jBtnIncluir_efb;
     private javax.swing.JScrollPane jScrollPane1;
