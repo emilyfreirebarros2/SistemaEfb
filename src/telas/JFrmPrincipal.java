@@ -130,6 +130,11 @@ public class JFrmPrincipal extends javax.swing.JFrame {
         jMenuVendaEfb.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.SHIFT_MASK));
         jMenuVendaEfb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/vendas.png"))); // NOI18N
         jMenuVendaEfb.setText("Venda");
+        jMenuVendaEfb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuVendaEfbActionPerformed(evt);
+            }
+        });
         jMnuMovimento_efb.add(jMenuVendaEfb);
 
         jMenuBar1.add(jMnuMovimento_efb);
@@ -254,6 +259,12 @@ public class JFrmPrincipal extends javax.swing.JFrame {
         JDlgConsultaCliente ConsultaCliente = new JDlgConsultaCliente(null, true);
         ConsultaCliente.setVisible(true);
     }//GEN-LAST:event_jMnuConsulClienteActionPerformed
+
+    private void jMenuVendaEfbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuVendaEfbActionPerformed
+        // TODO add your handling code here:
+        JDlgVendas jDlgVendas=new JDlgVendas(null, true);
+        jDlgVendas.setVisible(true);
+    }//GEN-LAST:event_jMenuVendaEfbActionPerformed
 
     /**
      * @param args the command line arguments
